@@ -7,3 +7,6 @@ def home(request):
      form = StudentRegistration()
      stud = User.objects.all()
      return render(request,'student/home.html',{'form':form,'stu':stud})
+
+def login (request):
+ return render(request,'student/login.html')
