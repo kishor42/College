@@ -1,0 +1,78 @@
+<script>
+    $("#btnsave").click(function() {
+      //  GetPagesLists();
+        Insert();
+    });
+
+    function Insert()
+     {
+     output= "";
+    let nm= $("#nameid").val();
+    
+    let em= $("#emailid").val();
+    let pw= $("#passwordid").val();
+    let csr=$("input[name=csrfmiddlewaretoken").val();
+    if(nm == ""){
+        console.log("Enter Name");
+    }
+    else if(em==""){
+        console.log("Enter Email");
+
+    }
+    else if (pw == ""){
+        console.log("Enter Password");
+    }
+    else{
+        datas={name:nm,email:em,password:pw,csrfmiddlewaretoken:csr };
+      $.ajax({
+          url:"{% url 'save' %}",
+          method:"POST",
+          data: datas,
+          success : function (data)
+          {
+              debugger;
+              x=data.student_data;
+           if(data.status =="Save"){
+          //  GetPagesLists();
+        
+            //    var es = '';
+            //         var i = 1;
+            //         $.each(data, function (key, item) {
+            //             es += '<tr><td>' + x[i].id + '</td>';
+            //             es += '<td>'+x[i].name+'</td>';
+            //             es += '<td>' +x[i].email+ '</td>';
+            //             es += '<td>'  +x[i].password+ '</td> '; 
+            //             es += '</tr>'; 
+               //          i++;
+               //      });
+               //      $('#tbody').html(es);
+             for(i=0;i<x.length;i++)
+             {
+                 output +="<tr><td>"+
+                     x[i].id+
+                     "</td><td>"
+                         +x[i].name+
+                         "</td><td>"
+                             +x[i].email+
+                             "</td><td>"
+                                 +x[i].password+
+                         "</td><td> <input type='button' value='Edit' class='btn btn-warning btn-sm' data-sid="
+                             + x[i].id +
+                             "/> <input type='button' value='Delete' class='btn btn-warning btn-sm' data-sid="
+                             + x[i].id+
+                             "/></td></tr>";
+             }  
+             $("#tbody").html(output);       
+             $("form")[0].reset();
+     
+           }
+           if(data.status==0){
+               alert("Unable to save Data and Correct Email");
+               
+           }
+          },
+      });
+    }
+}
+
+</script>

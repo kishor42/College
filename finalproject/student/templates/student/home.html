@@ -34,7 +34,7 @@
                 <th scope="col">Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tbody">
          {% for st in stu %} 
            <tr>
               <td>{{st.id}}</td>
@@ -51,5 +51,10 @@
 </div> 
     </div>
 </div>
+<script src="{% static 'student/js/jquery.js' %}"></script>
+<script src="{% static 'student/js/popper.js' %}"></script>
+<script src="{% static 'student/js/bootstrap.js' %}"></script>
+
+{% include "student/ajax.html" %}
 </body>
 </html>
